@@ -1,0 +1,103 @@
+import { Course, StatisticItem, StudentProfile } from '../types';
+
+export const mockStudent: StudentProfile = {
+  name: 'Phùng Anh Tuấn',
+  studentId: 'B23DCCC174',
+  greeting: 'Chào buổi sáng',
+};
+
+export const mockStatistics: StatisticItem[] = [
+  {
+    id: 'stat_1',
+    title: 'Tổng số môn',
+    value: 6,
+    icon: 'book-open',
+    color: '#4F46E5',
+    bgColor: '#EEF2FF',
+  },
+  {
+    id: 'stat_2',
+    title: 'Số bài tập',
+    value: 18,
+    icon: 'clipboard-list',
+    color: '#F59E0B',
+    bgColor: '#FFFBEB',
+  },
+  {
+    id: 'stat_3',
+    title: 'Đã hoàn thành',
+    value: 2,
+    icon: 'trophy',
+    color: '#10B981',
+    bgColor: '#ECFDF5',
+  },
+];
+
+export const mockCourses: Course[] = [
+  {
+    id: 'c_01',
+    code: 'INT3120',
+    name: 'Lập trình Đa nền tảng',
+    instructor: 'TS. Nguyễn Văn Bình',
+    totalLessons: 16,
+    completedLessons: 16,
+    credits: 3,
+    thumbnail: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&auto=format&fit=crop&q=80',
+    room: 'Phòng Lab 302 - Nhà G2',
+  },
+  {
+    id: 'c_02',
+    code: 'INT3115',
+    name: 'Phát triển Ứng dụng Di động',
+    instructor: 'ThS. Trần Thị Mai',
+    totalLessons: 16,
+    completedLessons: 12,
+    credits: 3,
+    thumbnail: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=400&auto=format&fit=crop&q=80',
+    room: 'Hội trường 105 - Nhà C1',
+  },
+  {
+    id: 'c_03',
+    code: 'INT3204',
+    name: 'Cơ sở dữ liệu Nâng cao',
+    instructor: 'PGS. TS. Lê Hoàng Nam',
+    totalLessons: 15,
+    completedLessons: 9,
+    credits: 3,
+    thumbnail: 'https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=400&auto=format&fit=crop&q=80',
+    room: 'Phòng 401 - Nhà B3',
+  },
+  {
+    id: 'c_04',
+    code: 'INT3401',
+    name: 'Trí tuệ Nhân tạo Cơ sở',
+    instructor: 'TS. Vũ Minh Đạt',
+    totalLessons: 16,
+    completedLessons: 5,
+    credits: 3,
+    thumbnail: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=400&auto=format&fit=crop&q=80',
+    room: 'Phòng Lab AI - Nhà E3',
+  },
+  {
+    id: 'c_05',
+    code: 'INT3108',
+    name: 'Thiết kế Giao diện UI/UX',
+    instructor: 'ThS. Hoàng Diệu Linh',
+    totalLessons: 12,
+    completedLessons: 12,
+    credits: 2,
+    thumbnail: 'https://plus.unsplash.com/premium_photo-1724637400032-6d804df06497?q=80&w=1925&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    room: 'Phòng Thiết kế Đồ họa - Tầng 2',
+  },
+  {
+    id: 'c_06',
+    code: 'INT2206',
+    name: 'Mạng Máy tính & Truyền thông',
+    instructor: 'TS. Đỗ Quang Hưng',
+    totalLessons: 14,
+    completedLessons: 6,
+    credits: 3,
+    thumbnail: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&auto=format&fit=crop&q=80',
+    room: 'Phòng 204 - Nhà G2',
+  },
+];
