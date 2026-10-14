@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
 import s from './styles';
+
+const LOGO = require('../../assets/logo.png');
 
 export default function LoginScreen({ navigation }: any) {
   const [user, setUser] = useState('');
@@ -18,7 +20,8 @@ export default function LoginScreen({ navigation }: any) {
 
   return (
     <View style={s.wrap}>
-      <Text style={s.app}>ChatApp</Text>
+      <Image source={LOGO} style={s.logo} resizeMode="contain" />
+      <Text style={s.app}>UDU CHAT</Text>
       <TextInput style={s.input} placeholder="Tài khoản" value={user} onChangeText={setUser} />
       <TextInput
         style={s.input}
