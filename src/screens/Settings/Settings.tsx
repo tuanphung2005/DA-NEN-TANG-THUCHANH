@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import Header from '../../components/Header';
 import s from './styles';
 
 const INFO = [
@@ -16,7 +15,7 @@ export default function SettingsScreen({ navigation }: any) {
 
   return (
     <View style={s.wrap}>
-      <Header />
+
       <View style={s.profile}>
         <View style={s.av}>
           <Text style={s.avT}>T</Text>
