@@ -3,12 +3,12 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import LoginScreen from './src/screens/LoginScreen';
-import HomeScreen from './src/screens/HomeScreen';
-import ContactsScreen from './src/screens/ContactsScreen';
-import NotificationsScreen from './src/screens/NotificationsScreen';
-import SettingsScreen from './src/screens/SettingsScreen';
-import ChatScreen from './src/screens/ChatScreen';
+import LoginScreen from './src/screens/Login';
+import HomeScreen from './src/screens/Home';
+import ContactsScreen from './src/screens/Contacts';
+import NotificationsScreen from './src/screens/Notifications';
+import SettingsScreen from './src/screens/Settings';
+import ChatScreen from './src/screens/Chat';
 import { Home, Users, Bell, Settings } from 'lucide-react-native';
 
 const Stack = createNativeStackNavigator();
