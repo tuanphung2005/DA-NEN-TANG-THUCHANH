@@ -28,7 +28,6 @@ export default function NotificationsScreen() {
             style={[s.row, { backgroundColor: item.read ? '#fff' : '#EAF3FF' }]}
             onPress={() => mark(item.id)}
           >
-            {!item.read && <View style={s.unreadDot} />}
             <View style={{ flex: 1 }}>
               <Text style={[s.text, { fontWeight: item.read ? 'normal' : 'bold' }]}>{item.text}</Text>
               <Text style={s.time}>{item.time} • {item.read ? 'Đã đọc' : 'Chưa đọc'}</Text>
