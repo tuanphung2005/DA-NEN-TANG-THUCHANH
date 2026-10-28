@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, FlatList } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Header from '../../components/Header';
 import s from './styles';
 
@@ -16,9 +17,12 @@ export default function NotificationsScreen() {
   const mark = (id: string) => setList(p => p.map(n => (n.id === id ? { ...n, read: true } : n)));
 
   return (
-    <View style={s.wrap}>
-      <Header />
-      <TouchableOpacity style={s.btn} onPress={() => setList(p => p.map(n => ({ ...n, read: true })))}>
+    <SafeAreaView style={s.wrap} edges={['top']}>
+      <Header title="Thông báo" />
+      <TouchableOpacity
+        style={s.btn}
+        onPress={() => setList(p => p.map(n => ({ ...n, read: true })))}
+      >
         <Text style={s.btnT}>Đánh dấu tất cả đã đọc</Text>
       </TouchableOpacity>
       <FlatList
@@ -36,6 +40,6 @@ export default function NotificationsScreen() {
           </TouchableOpacity>
         )}
       />
-    </View>
+    </SafeAreaView>
   );
 }

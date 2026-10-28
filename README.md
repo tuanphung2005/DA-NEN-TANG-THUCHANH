@@ -1,6 +1,54 @@
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
+# Bài 5 – Chat realtime với Firebase
+
+## 1. Cấu hình Firebase
+
+1. Tạo project tại [Firebase Console](https://console.firebase.google.com), thêm app Android/iOS.
+2. Bật **Authentication → Sign-in method → Email/Password**.
+3. Bật **Realtime Database** (chọn chế độ Locked mode).
+4. Dán cấu hình app vào `firebaseConfig` trong `src/services/firebase.ts`.
+5. Mở tab **Rules** của Realtime Database, dán nội dung `firebase.rules.json` rồi Publish.
+
+Luật bảo mật: chỉ người đã đăng nhập mới đọc được danh bạ; mỗi người chỉ sửa hồ sơ của mình; chỉ thành viên của một cuộc trò chuyện mới đọc/ghi được cuộc trò chuyện đó. Không đọc được danh sách toàn bộ tin nhắn.
+
+## 2. Cài đặt và chạy
+
+`@react-native-community/geolocation` là native module nên cần build lại app (không chỉ reload JS):
+
+```sh
+npm install
+npm run android
+# iOS: bundle exec pod install && npm run ios
+```
+
+## 3. Thử hai người dùng
+
+Đăng ký 2 tài khoản trên 2 máy/emulator, đăng nhập ở cả hai, mở **Danh bạ** và nhắn tin. Trạng thái online cập nhật realtime; tắt app/mất mạng sẽ tự chuyển offline.
+
+Trên emulator Android, đặt vị trí giả trong **Extended Controls → Location** để thử nút gửi vị trí.
+
+## 4. Cấu trúc
+
+- `src/services/firebase.ts`: khởi tạo Firebase app, auth, database.
+- `src/services/auth.ts`: đăng ký, đăng nhập, đăng xuất, presence online.
+- `src/services/users.ts`: danh bạ realtime.
+- `src/services/chat.ts`: cuộc trò chuyện, tin nhắn, unread, vị trí.
+
+Dữ liệu:
+
+```
+users/{uid}: { name, email, online }
+userConvs/{uid}/{conversationId}: true
+conversations/{conversationId}:
+  members: { uidA: true, uidB: true }
+  lastMessage, lastSenderId, lastTime
+  unread: { uid: number }
+  messages/{messageId}: { senderId, type, text?, latitude?, longitude?, createdAt }
+```
+
 # Getting Started
+
 
 > **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
 

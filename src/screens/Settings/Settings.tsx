@@ -1,40 +1,52 @@
-import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, TouchableOpacity, Alert } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { auth } from '../../services/firebase';
+import { logout } from '../../services/auth';
+import { listenUser, User } from '../../services/users';
 import s from './styles';
 
-const INFO = [
-  { label: 'SĐT', value: '0901234567' },
-  { label: 'Ngày sinh', value: '29/10/2005' },
-  { label: 'Giới tính', value: 'Nam' },
-  { label: 'Địa chỉ', value: 'Hà Nội' },
-  { label: 'Ngày đăng ký', value: '15/09/2026' },
-];
+export default function SettingsScreen() {
+  const uid = auth.currentUser?.uid ?? '';
+  const [profile, setProfile] = useState<User | null>(null);
 
-export default function SettingsScreen({ navigation }: any) {
-  const logout = () => (navigation.getParent() ?? navigation).replace('Login');
+  useEffect(() => {
+    if (!uid) return;
+    return listenUser(uid, setProfile);
+  }, [uid]);
+
+  const doLogout = async () => {
+    try {
+      await logout();
+    } catch {
+      Alert.alert('Lỗi', 'Không thể đăng xuất, vui lòng thử lại.');
+    }
+  };
 
   return (
-    <View style={s.wrap}>
-
+    <SafeAreaView style={s.wrap} edges={['top']}>
+      <Text style={s.screen}>Cài đặt</Text>
       <View style={s.profile}>
         <View style={s.av}>
-          <Text style={s.avT}>T</Text>
+          <Text style={s.avT}>{profile?.name?.[0] ?? '?'}</Text>
         </View>
-        <Text style={s.name}>Phùng Anh Tuấn</Text>
-        <Text style={s.sub}>phungtuan@phungtuan.vn</Text>
+        <Text style={s.name}>{profile?.name ?? ''}</Text>
+        <Text style={s.sub}>{profile?.email ?? ''}</Text>
       </View>
       <Text style={s.title}>Thông tin cá nhân</Text>
       <View style={s.info}>
-        {INFO.map(i => (
-          <View key={i.label} style={s.row}>
-            <Text style={s.label}>{i.label}</Text>
-            <Text style={s.value}>{i.value}</Text>
-          </View>
-        ))}
+        <View style={s.row}>
+          <Text style={s.label}>Họ tên</Text>
+          <Text style={s.value}>{profile?.name ?? ''}</Text>
+        </View>
+        <View style={s.row}>
+          <Text style={s.label}>Email</Text>
+          <Text style={s.value}>{profile?.email ?? ''}</Text>
+        </View>
       </View>
-      <TouchableOpacity style={s.btn} onPress={logout}>
+      <TouchableOpacity style={s.btn} onPress={doLogout}>
         <Text style={s.btnT}>Đăng xuất</Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 }
