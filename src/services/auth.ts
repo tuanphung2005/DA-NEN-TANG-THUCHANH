@@ -1,5 +1,11 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { onDisconnect, ref, set } from 'firebase/database';
+import {
+  onDisconnect,
+  ref,
+  serverTimestamp,
+  set,
+  update,
+} from 'firebase/database';
 import { auth, db } from './firebase';
 
 const ERRORS: Record<string, string> = {
@@ -14,10 +20,15 @@ const ERRORS: Record<string, string> = {
 
 export const authError = (e: any) => ERRORS[e?.code] ?? 'Có lỗi xảy ra, vui lòng thử lại.';
 
-function startPresence(uid: string) {
+export function startPresence(uid: string) {
   const online = ref(db, `users/${uid}/online`);
-  set(online, true);
+  const seen = ref(db, `users/${uid}/lastSeen`);
+  update(ref(db, `users/${uid}`), {
+    online: true,
+    lastSeen: serverTimestamp(),
+  });
   onDisconnect(online).set(false);
+  onDisconnect(seen).set(serverTimestamp());
 }
 
 export async function register(name: string, email: string, password: string) {
@@ -38,8 +49,14 @@ export async function login(email: string, password: string) {
 export async function logout() {
   const uid = auth.currentUser?.uid;
   if (uid) {
-    await onDisconnect(ref(db, `users/${uid}/online`)).cancel();
-    await set(ref(db, `users/${uid}/online`), false);
+    const online = ref(db, `users/${uid}/online`);
+    const seen = ref(db, `users/${uid}/lastSeen`);
+    await onDisconnect(online).cancel();
+    await onDisconnect(seen).cancel();
+    await update(ref(db, `users/${uid}`), {
+      online: false,
+      lastSeen: serverTimestamp(),
+    });
   }
   await signOut(auth);
 }

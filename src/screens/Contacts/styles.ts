@@ -2,6 +2,17 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   wrap: { flex: 1, backgroundColor: '#fff', padding: 12 },
+  groupBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '#007AFF',
+    borderRadius: 8,
+    padding: 10,
+    marginBottom: 12,
+  },
+  groupBtnT: { color: '#007AFF', fontWeight: 'bold', marginLeft: 6 },
   search: {
     borderWidth: 1,
     borderColor: '#E5E5E5',

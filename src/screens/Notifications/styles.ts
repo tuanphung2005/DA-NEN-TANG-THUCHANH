@@ -10,6 +10,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     marginBottom: 12,
   },
+  btnOff: { borderColor: '#ccc' },
   btnT: { color: '#007AFF', fontWeight: 'bold' },
   row: {
     flexDirection: 'row',
@@ -20,13 +21,15 @@ export default StyleSheet.create({
     marginBottom: 8,
     alignItems: 'center',
   },
-  unreadDot: {
+  icon: { marginRight: 10 },
+  mid: { flex: 1 },
+  dot: {
     width: 8,
     height: 8,
     borderRadius: 999,
     backgroundColor: '#007AFF',
-    marginRight: 8,
   },
   text: { fontSize: 14 },
-  time: { fontSize: 12, marginTop: 4 },
+  time: { fontSize: 12, marginTop: 4, color: '#666' },
+  empty: { textAlign: 'center', marginTop: 24, color: '#888' },
 });

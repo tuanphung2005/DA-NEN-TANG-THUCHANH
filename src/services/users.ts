@@ -6,6 +6,7 @@ export type User = {
   name: string;
   email: string;
   online: boolean;
+  lastSeen?: number | null;
 };
 
 export function listenUsers(myId: string, cb: (users: User[]) => void) {

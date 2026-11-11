@@ -1,0 +1,48 @@
+import { StyleSheet } from 'react-native';
+
+export default StyleSheet.create({
+  wrap: { flex: 1, backgroundColor: '#fff', padding: 12 },
+  head: { flexDirection: 'row', alignItems: 'center', marginBottom: 12 },
+  back: { paddingRight: 6, paddingVertical: 4 },
+  title: { fontSize: 20, fontWeight: 'bold', marginLeft: 8 },
+  input: {
+    borderWidth: 1,
+    borderColor: '#E5E5E5',
+    borderRadius: 8,
+    padding: 10,
+    marginBottom: 12,
+  },
+  label: { fontWeight: 'bold', marginBottom: 8 },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#E5E5E5',
+    borderRadius: 8,
+    padding: 10,
+    marginBottom: 8,
+  },
+  av: {
+    width: 40,
+    height: 40,
+    borderRadius: 999,
+    backgroundColor: '#007AFF',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  avT: { color: '#fff', fontWeight: 'bold' },
+  mid: { flex: 1, marginLeft: 10 },
+  name: { fontWeight: 'bold' },
+  st: { fontSize: 12, color: '#666', marginTop: 2 },
+  empty: { textAlign: 'center', marginTop: 24, color: '#888' },
+  btn: {
+    backgroundColor: '#007AFF',
+    borderRadius: 8,
+    padding: 14,
+    alignItems: 'center',
+    marginTop: 8,
+  },
+  btnOff: { backgroundColor: '#A9C9F5' },
+  btnT: { color: '#fff', fontWeight: 'bold' },
+  hint: { textAlign: 'center', color: '#888', fontSize: 12, marginTop: 8 },
+});

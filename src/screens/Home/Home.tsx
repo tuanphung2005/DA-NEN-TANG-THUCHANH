@@ -7,24 +7,29 @@ import {
   FlatList,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { MapPin } from 'lucide-react-native';
+import {
+  Image as ImageIcon,
+  MapPin,
+  Undo2,
+  Users,
+} from 'lucide-react-native';
 import Header from '../../components/Header';
 import { auth } from '../../services/firebase';
 import {
+  ChatItem,
   formatTime,
-  listenConversations,
-  Conversation,
-} from '../../services/chat';
+  listenChats,
+} from '../../services/chatService';
 import { listenUsers, User } from '../../services/users';
 import s from './styles';
 
 export default function HomeScreen({ navigation }: any) {
   const myId = auth.currentUser?.uid ?? '';
-  const [convs, setConvs] = useState<Conversation[]>([]);
+  const [chats, setChats] = useState<ChatItem[]>([]);
   const [users, setUsers] = useState<Record<string, User>>({});
   const [q, setQ] = useState('');
 
-  useEffect(() => listenConversations(myId, setConvs), [myId]);
+  useEffect(() => listenChats(myId, setChats), [myId]);
   useEffect(
     () =>
       listenUsers(myId, list =>
@@ -33,17 +38,22 @@ export default function HomeScreen({ navigation }: any) {
     [myId],
   );
 
-  const rows = convs
-    .map(c => {
-      const otherId =
-        Object.keys(c.members ?? {}).find(id => id !== myId) ?? '';
-      return {
-        ...c,
-        otherId,
-        name: users[otherId]?.name ?? 'Người dùng',
-        unread: c.unread?.[myId] ?? 0,
-      };
-    })
+  const rows = chats
+    .map(c => ({
+      ...c,
+      name:
+        c.type === 'group'
+          ? c.title || 'Nhóm'
+          : users[c.peerId ?? '']?.name || c.title || 'Người dùng',
+      lastIcon:
+        c.lastType === 'image'
+          ? ('image' as const)
+          : c.lastType === 'location'
+          ? ('location' as const)
+          : c.lastType === 'recalled'
+          ? ('recalled' as const)
+          : null,
+    }))
     .filter(c => c.name.toLowerCase().includes(q.toLowerCase()));
 
   return (
@@ -65,29 +75,47 @@ export default function HomeScreen({ navigation }: any) {
           <TouchableOpacity
             style={s.row}
             onPress={() =>
-              navigation.navigate('Chat', {
-                userId: item.otherId,
-                name: item.name,
-              })
+              navigation.navigate('Chat', { convId: item.id, name: item.name })
             }
           >
             <View style={s.av}>
-              <Text style={s.avT}>{item.name[0]}</Text>
+              {item.type === 'group' ? (
+                <Users color="#fff" size={20} />
+              ) : (
+                <Text style={s.avT}>{item.name[0]}</Text>
+              )}
             </View>
             <View style={s.mid}>
-              <Text style={s.name}>{item.name}</Text>
+              <View style={s.nameRow}>
+                {item.type === 'group' && (
+                  <Users color="#888" size={13} style={s.groupIcon} />
+                )}
+                <Text style={s.name} numberOfLines={1}>
+                  {item.name}
+                </Text>
+              </View>
               <View style={s.lastRow}>
-                {item.lastType === 'location' && (
+                {item.lastIcon === 'image' && (
+                  <ImageIcon size={12} color="#888" style={s.lastIcon} />
+                )}
+                {item.lastIcon === 'location' && (
                   <MapPin size={12} color="#888" style={s.lastIcon} />
                 )}
+                {item.lastIcon === 'recalled' && (
+                  <Undo2 size={12} color="#888" style={s.lastIcon} />
+                )}
                 <Text numberOfLines={1} style={s.last}>
-                  {item.lastSenderId === myId ? 'Bạn: ' : ''}
+                  {item.lastSenderId === myId
+                    ? 'Bạn: '
+                    : item.type === 'group'
+                    ? `${item.lastSenderName ?? ''}: `
+                    : ''}
                   {item.lastMessage}
                 </Text>
               </View>
             </View>
             <View style={s.right}>
-              <Text style={s.time}>{formatTime(item.lastTime)}</Text>
+              <Text style={s.time}>{formatTime(item.updatedAt)}</Text>
               {item.unread > 0 && (
                 <View style={s.badge}>
                   <Text style={s.badgeT}>{item.unread}</Text>

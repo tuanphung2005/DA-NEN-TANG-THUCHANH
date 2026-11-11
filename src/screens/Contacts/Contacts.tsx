@@ -7,6 +7,7 @@ import {
   FlatList,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { UserPlus } from 'lucide-react-native';
 import { auth } from '../../services/firebase';
 import { listenUsers, User } from '../../services/users';
 import Header from '../../components/Header';
@@ -26,6 +27,13 @@ export default function ContactsScreen({ navigation }: any) {
   return (
     <SafeAreaView style={s.wrap} edges={['top']}>
       <Header title="Danh bạ" />
+      <TouchableOpacity
+        style={s.groupBtn}
+        onPress={() => navigation.navigate('CreateGroup')}
+      >
+        <UserPlus color="#007AFF" size={18} />
+        <Text style={s.groupBtnT}>Tạo nhóm trò chuyện</Text>
+      </TouchableOpacity>
       <TextInput
         style={s.search}
         placeholder="Tìm kiếm danh bạ"
